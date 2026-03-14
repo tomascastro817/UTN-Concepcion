@@ -6,17 +6,18 @@ import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import Carousel from '../components/Carousel';
 import Map from '../components/Map';
+import Hero from '../components/Hero';
+
 const Home = () => {
   return (
-    <div>
-        <div className="bg-gray-300 font-serif">
-            <Header/>
-            <Nav></Nav>
-            <Carousel></Carousel>
-            <Cards/>
-            <Map/>
-            <Footer></Footer>
-            </div>
+    <div className="bg-slate-950 font-sans min-h-screen">
+      <Header />
+      <Nav />
+      <Hero />
+      <Carousel />
+      <Cards />
+      <Map />
+      <Footer />
     </div>
   )
 }

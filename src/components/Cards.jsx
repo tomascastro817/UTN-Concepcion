@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 import mecanica from '../assets/images/ingmec.jpg';
 import electronica from '../assets/images/ingenieriaelectronica.jpg';
@@ -9,34 +9,52 @@ import mecatronica from '../assets/images/mecatronica.png';
 import hys from '../assets/images/higieneyseguridad.jpg';
 import logistica from '../assets/images/logistica.png';
 
-import{motion} from 'framer-motion'
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
 
 const CarrerasCard = ({ title, description, image, link }) => {
   return (
-    <motion.div 
-    initial="hidden"
-            whileInView ="visible"
-            viewport={{once: true, amount:0.5}}
-            transition={{delay:0.5, duration:0.5}}
-            variants={{
-              hidden:{opacity:0, y:150},
-              visible:{opacity:1, y:0}
-            }}
-            
-            
-            
-    className="w-full sm:w-1/2 lg:1/3 p-4 ">
-      <div className="bg-slate-200 shadow-lg rounded-lg overflow-hidden m-4 transition-transform transform  hover:none md:hover:scale-105 md:hover:rotate-6">
-        <img className="w-full h-48 object-cover" src={image} alt="Imagen de la tarjeta " />
-        <div className="p-4">
-          <div className="text-2xl font-bold">{title}</div>
-          <p className="text-gray-600 mt-2">{description}</p>
-          <div className="mt-4 flex justify-center">
-              <button className="bg-emerald-800 text-white py-2 px-4 rounded-full hover:bg-emerald-400 transition duration-300">
-                <Link to={link}>
-                    Ver más
-                </Link>
-              </button>
+    <motion.div
+      variants={cardVariants}
+      className="w-full sm:w-1/2 lg:w-1/3 p-4 flex"
+    >
+      <div className="group relative bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl overflow-hidden flex flex-col w-full transition-all duration-400 hover:border-emerald-500/40 hover:shadow-[0_0_40px_rgba(5,150,105,0.2)] hover:-translate-y-1">
+        {/* Image */}
+        <div className="relative overflow-hidden h-52">
+          <img
+            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+            src={image}
+            alt={`Imagen de ${title}`}
+          />
+          {/* Overlay on hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+          {/* Emerald accent line at bottom of image */}
+          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </div>
+
+        {/* Content */}
+        <div className="p-6 flex flex-col flex-grow">
+          <h3 className="text-lg font-bold text-white mb-3 leading-snug group-hover:text-emerald-300 transition-colors duration-300">
+            {title}
+          </h3>
+          <p className="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">{description}</p>
+
+          <div className="mt-auto pt-4 border-t border-slate-700/50">
+            <Link
+              to={link}
+              className="w-full flex items-center justify-center gap-2 text-center border border-emerald-500/50 text-emerald-400 font-semibold py-2.5 px-6 rounded-xl hover:bg-emerald-500 hover:text-slate-950 hover:border-emerald-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.35)] transition-all duration-300 text-sm"
+            >
+              Ver más →
+            </Link>
           </div>
         </div>
       </div>
@@ -44,23 +62,38 @@ const CarrerasCard = ({ title, description, image, link }) => {
   );
 };
 
+const SectionTitle = ({ label, highlight }) => (
+  <motion.div
+    initial={{ opacity: 0, y: -20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.5 }}
+    transition={{ duration: 0.5 }}
+    className="text-center mb-12"
+  >
+    <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+      {label} <span className="text-emerald-400">{highlight}</span>
+    </h2>
+    <div className="mt-4 mx-auto w-20 h-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-400" />
+  </motion.div>
+);
+
 const Carreras = () => {
   const carrerasGrado = [
     {
-      title: "Ingenieria Mecanica",
-      description: "El ingeniero mecánico está capacitado para: Diseñar e instalar equipos mecánicos o térmicos; especificar materiales, costos y duración de la ejecución. Planear y dirigir operaciones de manufactura y mantenimiento de maquinaria; evaluar y optimizar procesos de conversión de energía.",
+      title: "Ingeniería Mecánica",
+      description: "El ingeniero mecánico está capacitado para diseñar e instalar equipos mecánicos o térmicos, especificar materiales, costos y dirigir operaciones de manufactura y mantenimiento de maquinaria.",
       image: mecanica,
       link: "/IngenieriaMecanica",
     },
     {
-      title: "Ingenieria en Sistemas de Informacion",
-      description: "Los ingenieros de sistemas supervisan todos los aspectos de un proyecto o sistema en una variedad de campos, como software, transporte, desarrollo de productos y fabricación.",
+      title: "Ingeniería en Sistemas de Información",
+      description: "Los ingenieros de sistemas supervisan todos los aspectos de un proyecto tecnológico, convergiendo campos como matemática, programación, gestión de datos, software, hardware y redes.",
       image: isi,
       link: "/IngenieriaSistemas",
     },
     {
-      title: "Ingenieria Electronica",
-      description: "Los ingenieros electrónicos se dedican al diseño y desarrollo de productos electrónicos que utilizan, por ejemplo, los sistemas de telecomunicaciones, los ordenadores, el láser, y los sistemas de emisión por satélite, de radar y de televisión.",
+      title: "Ingeniería Electrónica",
+      description: "Los ingenieros electrónicos se dedican al diseño y desarrollo de productos para telecomunicaciones, computación, sistemas de radar, televisión por satélite y tecnología embebida.",
       image: electronica,
       link: "/IngenieriaElectronica",
     },
@@ -69,70 +102,66 @@ const Carreras = () => {
   const carrerasPregrado = [
     {
       title: "Tecnicatura Superior en Programación",
-      description: "El Técnico Superior en Programación está capacitado para: Analizar un problema de procesamiento de datos y desarrollarlo en un lenguaje apropiado para su resolución por una computadora, seleccionando el algoritmo adecuado.",
+      description: "Capacita para analizar problemas de procesamiento de datos y desarrollarlos en lenguajes de programación apropiados, seleccionando el algoritmo y la arquitectura adecuada.",
       image: programacion,
       link: "/TecnicaturaProgramacion",
     },
     {
-      title: "Tecnicatura Superior en Mecatronica",
-      description: "El Técnico Superior en Mecatrónica gestiona la planificación del mantenimiento de equipos e instalaciones de tecnología e infraestructura mecatrónica, vinculados a los sistemas mecánicos, hidráulicos, neumáticos, eléctricos, electrónicos e informáticos.",
+      title: "Tecnicatura Superior en Mecatrónica",
+      description: "Gestiona la planificación del mantenimiento de equipos e instalaciones de tecnología mecatrónica, vinculados a sistemas mecánicos, hidráulicos, eléctricos e informáticos.",
       image: mecatronica,
-      link: "/TecnicaturaHigieneSeguridad",
-    },
-    {
-      title: "Tecnicatura Superior en Higiene y Seguridad",
-      description: "Esta tecnicatura universitaria capacita a los estudiantes en diferentes ámbitos laborales y los prepara para evaluar y controlar situaciones inherentes a riesgos de contaminación química, biológica, radioactiva y otros riesgos del trabajo.",
-      image: hys,
       link: "/TecnicaturaMecatronica",
     },
     {
-      title: "Tecnicatura Superior en Logistica",
-      description: "La técnica o el técnico de logística se encarga de gestionar y organizar las actividades relacionadas con la recepción, el almacenaje, el transporte y la expedición de mercancías en una empresa.",
+      title: "Tecnicatura Superior en Higiene y Seguridad",
+      description: "Prepara para evaluar y controlar situaciones inherentes a riesgos laborales de contaminación química, biológica, radioactiva y otros riesgos del trabajo en distintos ámbitos.",
+      image: hys,
+      link: "/TecnicaturaHigieneSeguridad",
+    },
+    {
+      title: "Tecnicatura Superior en Logística",
+      description: "Forma especialistas en gestión y organización de actividades vinculadas a recepción, almacenaje, transporte y expedición de mercancías en empresas y cadenas de suministro.",
       image: logistica,
       link: "/TecnicaturaLogistica",
     },
   ];
 
   return (
-    <div>
-      <div className="max-w-screen-xl mx-auto bg-gray-300 shadow-lg rounded-lg">
-        <motion.div 
-        initial="hidden"
-            whileInView ="visible"
-            viewport={{once: true, amount:0.5}}
-            transition={{delay:0.5, duration:0.5}}
-            variants={{
-              hidden:{opacity:0, x:-150},
-              visible:{opacity:1, x:0}
-              
-            }}
-        className="text-3xl font-bold text-center my-4">CARRERAS DE GRADO</motion.div>
-        <div className="flex flex-wrap justify-center">
-        {carrerasGrado.map((carrera, index) => (
-          <CarrerasCard key={index} title={carrera.title} description={carrera.description} image={carrera.image} link={carrera.link} />
-        ))}
+    <section id="carreras" className="py-20 bg-slate-950">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        </div>
-        <motion.div 
-        initial="hidden"
-            whileInView ="visible"
-            viewport={{once: true, amount:0.5}}
-            transition={{delay:0.5, duration:0.5}}
-            variants={{
-              hidden:{opacity:0, x:-150},
-              visible:{opacity:1, x:0}
-            }}
-        className="text-3xl font-bold text-center my-4">CARRERAS DE PREGRADO</motion.div>
-        <div className="flex flex-wrap justify-center">
-          {carrerasPregrado.map((carrera, index) => (
-            <CarrerasCard key={index} title={carrera.title} description={carrera.description} image={carrera.image} link={carrera.link} />
+        <SectionTitle label="CARRERAS DE" highlight="GRADO" />
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="flex flex-wrap justify-center -mx-4"
+        >
+          {carrerasGrado.map((carrera, index) => (
+            <CarrerasCard key={index} {...carrera} />
           ))}
+        </motion.div>
 
+        <div className="mt-20">
+          <SectionTitle label="CARRERAS DE" highlight="PREGRADO" />
         </div>
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="flex flex-wrap justify-center -mx-4"
+        >
+          {carrerasPregrado.map((carrera, index) => (
+            <CarrerasCard key={index} {...carrera} />
+          ))}
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 
 export default Carreras;
-

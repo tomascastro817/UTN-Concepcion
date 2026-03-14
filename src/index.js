@@ -2,14 +2,13 @@ import React from 'react';
 import ReactDOM from "react-dom/client";
 import './assets/main.css';
 
-
 import Home from "./pages/Home";
 import IngSis from "./pages/IngSis";
 import IngMec from "./pages/IngMec";
 import IngElec from "./pages/IngEle";
 import Prog from "./pages/TecProg";
 import HyS from "./pages/TecHyS";
-import Mecat from "./pages/TecMecat"; 
+import Mecat from "./pages/TecMecat";
 import Logistica from "./pages/TecLog";
 
 import Error from "./pages/Error";
@@ -48,15 +47,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/TecnicaturaMecatronica",
-    element: <Mecat/>,
+    element: <Mecat />,
   },
   {
     path: "/TecnicaturaLogistica",
-    element: <Logistica/>,
+    element: <Logistica />,
   },
   {
     path: "/CalendarioAcademico",
-    element: <Calendario/>,
+    element: <Calendario />,
   }
 ]);
 
