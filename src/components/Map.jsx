@@ -20,23 +20,26 @@ export default function Map() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    const map = new mapboxgl.Map({
+    map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
       center: [lng, lat],
-      zoom: zoom
+      zoom: zoom,
     });
 
-    return () => map.remove();
-  }, [lat, lng, zoom]);
-
-    map.current.on('load', () => {
-      new mapboxgl.Marker({ color: '#10b981' })
+    map.current.on("load", () => {
+      new mapboxgl.Marker()
         .setLngLat([lng, lat])
-        .setPopup(new mapboxgl.Popup({ offset: 25 }).setText('UTN · Extensión Aúlica Concepción'))
         .addTo(map.current);
     });
-  }, []);
+
+    return () => {
+      if (map.current) {
+        map.current.remove();
+      }
+    };
+
+  }, [lat, lng, zoom]);
 
   return (
     <section id="contacto-mapa" className="bg-slate-950 py-20">
