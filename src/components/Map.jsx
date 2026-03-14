@@ -20,13 +20,15 @@ export default function Map() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (map.current) return;
-    map.current = new mapboxgl.Map({
+    const map = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/dark-v11',
+      style: "mapbox://styles/mapbox/streets-v11",
       center: [lng, lat],
-      zoom: zoom,
+      zoom: zoom
     });
+
+    return () => map.remove();
+  }, [lat, lng, zoom]);
 
     map.current.on('load', () => {
       new mapboxgl.Marker({ color: '#10b981' })
